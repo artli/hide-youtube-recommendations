@@ -1,33 +1,64 @@
 // ==UserScript==
 // @name           Custom Youtube rules
-// @version        0.2.0
+// @version        0.3.0
 // @include          https://youtube.com/*
 // @include          https://*.youtube.com/*
-// @exclude          https://*.youtube.com/feed/subscriptions
 // ==/UserScript==
 
+// @exclude          https://*.youtube.com/feed/subscriptions
 
-function addStyle(css) {
+
+function StyleHolder() {
+    this.blacklist = arguments;
+    this.elements = [];
+    this.interval = setInterval(this.tick.bind(this), 1000);
+    this.enabled = false;
+}
+
+StyleHolder.prototype.checkUrl = function(url) {
+    for (var i = 0; i < this.blacklist.length; i++) {
+        if (url.search(this.blacklist[i]) != -1) {
+            return false;
+        }
+    }
+    return true;
+}
+
+StyleHolder.prototype.tick = function() {
+    var enable = this.checkUrl(unsafeWindow.location.href);
+    if (enable == this.enabled) {
+        return;
+    }
+    this.enabled = enable;
+    var action = (enable ? document.head.appendChild : document.head.removeChild).bind(document.head);
+    this.elements.map(action);
+}
+
+StyleHolder.prototype.addStyle = function(css) {
     var style = document.createElement('style');
     style.type = 'text/css';
     style.appendChild(document.createTextNode(css));
-    document.head.appendChild(style);
+    this.elements.push(style);
 }
 
-function hide(selector) {
-    addStyle(selector + ' { display: none !important; }');
+StyleHolder.prototype.hide = function(selector) {
+    this.addStyle(selector + ' { display: none !important; }');
 }
 
-function blacken(selector, color) {
+StyleHolder.prototype.blacken = function(selector, color) {
     color = color || 'black';
-    addStyle(selector + ' { color: ' + color + ' !important; background-color: ' + color + ' !important; }\n' + selector + ':hover { color: ' + color + ' !important; }');
+    this.addStyle(
+        selector + ' { color: ' + color + ' !important; background-color: ' + color + ' !important; }\n'
+        + selector + ':hover { color: ' + color + ' !important; }');
 }
 
-old_onload = document.body.onload;
+
+var old_onload = document.body.onload;
 document.body.onload = function(e) {
-    blacken('.content-link .title', '#333');
-    blacken('.yt-lockup-title .yt-ui-ellipsis', '#333');
-    hide('.yt-uix-simple-thumb-wrap');
-    hide('.video-thumb');
+    var styleHolder = new StyleHolder('subscriptions');
+    styleHolder.blacken('.content-link .title', '#333');
+    styleHolder.blacken('.yt-lockup-title .yt-ui-ellipsis', '#333');
+    styleHolder.hide('.yt-uix-simple-thumb-wrap');
+    styleHolder.hide('.video-thumb');
     old_onload(e);
 };
