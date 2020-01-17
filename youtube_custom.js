@@ -1,17 +1,15 @@
 // ==UserScript==
 // @name           Custom Youtube rules
-// @version        0.3.1
+// @version        0.4.0
 // @include          https://youtube.com/*
 // @include          https://*.youtube.com/*
 // ==/UserScript==
-
-// @exclude          https://*.youtube.com/feed/subscriptions
 
 
 function StyleHolder() {
     this.blacklist = arguments;
     this.elements = [];
-    this.interval = setInterval(this.tick.bind(this), 1000);
+    this.interval = setInterval(this.tick.bind(this), 300);
     this.enabled = false;
 }
 
@@ -55,7 +53,7 @@ StyleHolder.prototype.blacken = function(selector, color) {
 
 var old_onload = document.body.onload;
 document.body.onload = function(e) {
-    var styleHolder = new StyleHolder('subscriptions', 'results');
+    var styleHolder = new StyleHolder('subscriptions', 'results', 'channel');
     styleHolder.blacken('.content-link .title', '#333');
     styleHolder.blacken('.yt-lockup-title .yt-ui-ellipsis', '#333');
     styleHolder.hide('.yt-uix-simple-thumb-wrap');
