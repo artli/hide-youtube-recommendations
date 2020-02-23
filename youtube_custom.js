@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           Custom Youtube rules
-// @version        0.4.0
+// @version        0.4.1
 // @include          https://youtube.com/*
 // @include          https://*.youtube.com/*
 // ==/UserScript==
@@ -53,7 +53,7 @@ StyleHolder.prototype.blacken = function(selector, color) {
 
 var old_onload = document.body.onload;
 document.body.onload = function(e) {
-    var styleHolder = new StyleHolder('subscriptions', 'results', 'channel');
+    var styleHolder = new StyleHolder('subscriptions', 'results', 'channel', 'user');
     styleHolder.blacken('.content-link .title', '#333');
     styleHolder.blacken('.yt-lockup-title .yt-ui-ellipsis', '#333');
     styleHolder.hide('.yt-uix-simple-thumb-wrap');
