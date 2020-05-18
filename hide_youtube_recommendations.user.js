@@ -1,8 +1,16 @@
 // ==UserScript==
-// @name             Censor YouTube recommendations
+// @id               hide-youtube-recommendations@artli
+// @name             Hide YouTube recommendations
 // @version          0.5.1
+// @author           https://github.com/artli
+// @license          Mozilla Public License 2.0
+// @namespace        https://github.com/artli/hide-youtube-recommendations
+// @description      Remove thumbnails and censor video titles of the recommended videos on the main page and in the recommendation sidebar.
+
+// @downloadURL      https://raw.githubusercontent.com/artli/hide-youtube-recommendations/latestRelease/hide_youtube_recommendations.user.js
 // @include          https://youtube.com/*
 // @include          https://*.youtube.com/*
+// @grant            none
 // ==/UserScript==
 
 
