@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id               hide-youtube-recommendations@artli
 // @name             Hide YouTube recommendations
-// @version          0.5.1
+// @version          0.5.2
 // @author           https://github.com/artli
 // @license          Mozilla Public License 2.0
 // @namespace        https://github.com/artli/hide-youtube-recommendations
@@ -10,7 +10,6 @@
 // @downloadURL      https://raw.githubusercontent.com/artli/hide-youtube-recommendations/latestRelease/hide_youtube_recommendations.user.js
 // @include          https://youtube.com/*
 // @include          https://*.youtube.com/*
-// @grant            none
 // ==/UserScript==
 
 
@@ -27,11 +26,10 @@ var censorRule = function(selector, color) {
 
 
 var RULES = [
-    censorRule('#video-title', '#030303'),
-    hideRule('ytd-thumbnail.ytd-compact-video-renderer'),
-    hideRule('ytd-thumbnail.ytd-rich-grid-video-renderer')];
+    censorRule('#video-title:not(.ytd-playlist-panel-video-renderer)', '#030303'),
+    hideRule('ytd-thumbnail:not(.ytd-playlist-panel-video-renderer)')];
 
-var URL_BLACKLIST = ['subscriptions', 'results', 'channel', 'user'];
+var URL_BLACKLIST = ['subscriptions', 'library', 'history', 'my_videos', 'playlist', 'results', 'channel', 'user'];
 
 
 var createStyle = function(css) {
