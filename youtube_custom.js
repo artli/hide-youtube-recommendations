@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name           Custom Youtube rules
-// @version        0.4.1
+// @name             Custom Youtube rules
+// @version          0.5.0
 // @include          https://youtube.com/*
 // @include          https://*.youtube.com/*
 // ==/UserScript==
@@ -51,12 +51,7 @@ StyleHolder.prototype.blacken = function(selector, color) {
 }
 
 
-var old_onload = document.body.onload;
-document.body.onload = function(e) {
-    var styleHolder = new StyleHolder('subscriptions', 'results', 'channel', 'user');
-    styleHolder.blacken('.content-link .title', '#333');
-    styleHolder.blacken('.yt-lockup-title .yt-ui-ellipsis', '#333');
-    styleHolder.hide('.yt-uix-simple-thumb-wrap');
-    styleHolder.hide('.video-thumb');
-    old_onload(e);
-};
+var styleHolder = new StyleHolder('subscriptions', 'results', 'channel', 'user');
+styleHolder.blacken('#video-title', '#030303');
+styleHolder.hide('ytd-thumbnail.ytd-compact-video-renderer');
+styleHolder.hide('ytd-thumbnail.ytd-rich-grid-video-renderer');
