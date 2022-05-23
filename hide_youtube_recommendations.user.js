@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id               hide-youtube-recommendations@artli
 // @name             Hide YouTube recommendations
-// @version          0.5.5
+// @version          0.5.6
 // @author           https://github.com/artli
 // @license          Mozilla Public License 2.0
 // @namespace        https://github.com/artli/hide-youtube-recommendations
@@ -20,7 +20,7 @@ var hideRule = function(selector) {
 var censorRule = function(selector, color) {
     color = color || 'black';
     return (
-        selector + ' { color: ' + color + ' !important; background-color: ' + color + ' !important; }\n'
+        selector + ' { color: transparent !important; background-color: ' + color + ' !important; }\n'
         + selector + ':hover { color: ' + color + ' !important; }');
 }
 
